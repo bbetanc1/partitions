@@ -1,0 +1,500 @@
+#' @useDynLib partitions
+#' @importFrom Rcpp sourceCpp
+NULL
+
+## Wrapper function ##
+# Inputs: N - the sample size based on the dataset           #
+#         Prior - Specify Prior Type: PERPS, NBNB, DP,PY,MFM #
+#         param - Parameter for prior type specified         #
+# Output: Parameters for probability of existing cluster (A) #
+#         and new cluster (B) for reseating algorithms       #
+
+#' Parameters for reseating algortihms
+#'
+#' @param  N  Number of records in the dataset 
+#' @param  Prior Specify partition prior: "DP", "PY", "ESCNB"
+#' @param  param Vector of parameters for specified prior  
+#' @return Parameters for probability of existing cluster (A)
+#'         and new cluster (B) for reseating algorithms
+#' @examples 
+#' SetParam("DP", c(1), 100)
+#' @export
+SetParam <- function(Prior, param, N){
+    if (Prior == "DP"){
+    	theta <- param[1]
+    	A <- seq(N)
+		B <- rep(theta,N)
+      }
+    if (Prior == "PY"){
+    	theta <- param[1]
+    	delta <- param[2]
+    	A <- seq(N) - delta
+    	B <- rep(theta, N) + seq(N) * delta
+      }
+    if (Prior == "ESCNB"){
+        rnb <- param[1]
+        pnb <- param[2]
+        beta <- ((1-pnb)^rnb)/(1-((1-pnb)^rnb))
+        A <- (seq(N) + rnb)
+        B <- (seq(N) + 1) * beta * rnb
+    }
+    return(list(A=A, B=B))
+}
+
+SetParamESCD <- function(mus, N, M){
+    A <- (seq(N) + 1) * (c((mus[-1])/mus[-(M+1)], rep(0, N-M)))
+    B <- (seq(N) + 1) * mus[1]
+    return(list(A=A, B=B))
+}
+
+
+## Wrapper function ##
+# Inputs: Prior - Specify Prior Type: DP, PY, ESCNB, ESCD      #
+# Output: Lower and Upper bound on support of the distribution #
+#         of Prior parameters                                  #
+
+#' @export
+lowupSlice <- function(Prior){
+    if (Prior == "DP"){
+    	lo <- 0
+    	up <- Inf
+    }
+    if (Prior == "PY"){
+    	lo <- c(0, 0)         
+    	up <- c(Inf, 1) 
+    }
+    if (Prior == "ESCNB"){
+        lo <- c(0, 0)
+        up <- c(Inf, 1)
+    }
+    if (Prior == "ESCD"){
+        lo <- c(0, 0, 0)
+        up <- c(Inf, Inf, 1)
+    }
+   return(list(lo=lo, up=up))
+}
+
+## Wrapper function ##
+# Inputs: Prior - Specify Prior Type: DP, PY, , ESCNB, ESCD     #
+#         N - number of record in data                          #
+# Output: Initial values for hyperpameters                      #
+
+#' @export
+SetInit <- function(Prior, N){
+	if (Prior == "DP"){
+    	#concentration parameter
+        theta <- N/2
+        x1 <- as.vector(theta)
+      }  
+    if (Prior == "PY"){
+    	#concentration parameter
+        theta <- N/2 
+        # discount parameter
+        beta <- 0.5 
+        x1 <- c(theta, beta)
+      }
+     if (Prior == "ESCNB"){
+        rnb <- 1
+        pnb <- 0.5
+        x1 <- c(rnb, pnb)
+       }
+     if (Prior == "ESCD"){
+        alpha <- 100
+        rnb <- 1
+        pnb <- 0.5
+        x1 <- c(alpha, rnb, pnb)
+       }
+       return(x1)
+}
+
+## Wrapper function ##
+# Inputs: Prior - Specify Prior Type: DP, PY, , ESCNB, ESCD #
+# Output: Indicator for hyperparameter sampling             #
+
+#' @export
+SamInd <- function(Prior){
+    if (Prior == "DP"){
+        #concentration parameter
+        samind <- c(1)
+    }
+    if (Prior == "PY"){
+        # concentration parameter
+        # discount parameter
+        samind <- c(1, 1)
+    }
+    if (Prior == "ESCNB"){
+        # NB parameters r and p
+        samind <- c(1, 1)
+    }
+    if (Prior == "ESCD"){
+        # NB parameters r and p, alpha fixed
+        samind <- c(0, 1, 1)
+    }
+    return(samind)
+}
+
+
+## Wrapper function ##
+# Inputs: Prior - Specify Prior Type: DP, PY, ESCNB, ESCD       #
+#         N - number of record in data                          #
+# Output: Vector of hyperpameter values for prior on parameters #
+#         of specified partition prior                          #
+
+#' @export
+hpriorpar <- function(Prior, N){
+	 if (Prior == "DP"){
+    	# Gamma(ag1, bg1) prior over theta
+        ag <- 1
+        bg <- 1/(N/2)#1/100
+        hpriorpar <- c(ag, bg)
+      }  
+    if (Prior == "PY"){
+    	# Gamma(ag, bg) prior over theta
+        bg <- 1/(N/2)
+        ag <- 1
+        # Beta(ab,bb) prior over delta
+        ab <- 1
+        bb <- 1
+        hpriorpar <- c(ag, bg, ab, bb)
+      }
+     if (Prior == "ESCNB" || Prior == "ESCD"){
+        # Gamma(ag, bg) prior over r
+        bg <- 1
+        ag <- 1
+        # Beta(ab,bb) prior over  p
+        ab <- 2
+        bb <- 2
+        hpriorpar <- c(ag, bg, ab, bb)
+       }
+    return(hpriorpar)
+}
+
+## Wrapper function ##
+# Inputs: Prior - Specify Prior Type: DP, PY, NBNB, NBD      #
+# Output: Parameter names used to save posterior samples     #
+
+#' @export
+NameParam <- function(Prior, nfields){
+    if (Prior=="DP"){
+        cnames <- c("theta")
+        for(i in 1:nfields){
+            cnames <- c(cnames, sprintf("beta_%d",i))
+        }
+    }
+    if (Prior=="PY"){
+        cnames <- c("theta", "delta")
+        for(i in 1:nfields){
+            cnames <- c(cnames, sprintf("beta_%d",i))
+        }
+    }
+    if (Prior=="ESCNB"){
+        cnames <- c("r", "p")
+        for(i in 1:nfields){
+            cnames <- c(cnames, sprintf("beta_%d",i))
+        }
+    }
+    if (Prior=="ESCD"){
+        cnames <- c("alpha", "r", "p")
+        for(i in 1:nfields){
+            cnames <- c(cnames, sprintf("beta_%d",i))
+        }
+    }
+    return(cnames)
+}
+
+# Computes proportion of each values in a field
+# Used to compute empirical distribution of data
+calcProp <- function(i,data) {
+    return(table(data[,i])/sum(table(data[,i])))
+}
+
+# For each field, remap values to a consecutive 
+# list of integers starting with 1
+remap <- function(i, data) {
+    return(as.numeric(factor(data[,i], labels = seq(1,length(unique(data[,i]))))))
+}
+
+# Sample from a Dirichlet
+#' @export
+rdirichlet <- function(params) {
+    p <- sapply(params, function(x) rgamma(1,x))
+    return(p/sum(p))
+}
+
+# Find Beta distribution parameters for distortion
+# probailities, given the mean and sd
+abeta <- function(bmean, bsd){
+    return (bmean*(1-bmean)*(bmean/bsd^2) - bmean)
+}
+
+
+#' Remap data to a list of consecutive integers per field
+#'
+#' @param data Data frame containing only categorical variables 
+#' @return Data frame of remapped values to consecutive 
+#'         list of integers
+#' @examples 
+#' DataRemap(Italy)
+#' @export
+DataRemap <- function(data) {
+	nfields <- ncol(data)
+	x <- sapply(1:nfields,remap,data=data)
+	return(x)
+}
+
+## Function Details ##
+# Main sampler function: chaperones algorithm for cluster    #
+# assignments and Slice sampler for priors' parameters and   #
+# distortion probablities of the fields.                     #
+#                                                            #
+# Inputs: Data - e.g "Italy"                                 #
+#         Prior - specify Prior Type: DP,PY,ESCNB, ESCD      #
+#         burn - MCMC burn-in period                         #
+#         nsamples - MCMC iterations                         #
+#         truncds - truncation value for field distortions   #
+#         samds - indicator to sample field distortions      #
+#         spacing - chaperones restricted Gibbs moves        #
+#         w - step size for slice sampler                    #
+#         m - number of steps                                #
+#         hpriorpar - vector of prior hyperparameters        #
+#         bl - vector containing block assignment            #
+# Output: Posterior samples for prior parameters and         #
+#         cluster assingments                                #
+# Summary: This is a wrapper function that requires the user #
+#          specify the data, prior and MCMC parameters       #
+#          and returns  posterior samples of cluster         #
+#          assignments and hyperparameters.                  #
+
+#' Posterior samples of cluster assignments and Prior parameters
+#'
+#' @param data Data frame containing only categorical variables 
+#' @param Prior Specify partition prior: "DP", "PY", "ESCNB"
+#' @param burn MCMC burn-in period
+#' @param nsamples MCMC iterations after burn-in
+#' @param truncds Truncation value for distortion probabilities (betas)
+#' @param samds Indicator to sample the fields' distortion probabilities (betas)
+#' @param spacing Thinning for chaperones algorithm (default 1000)
+#' @param w Step size for slice sampler (default 3)
+#' @param m Limit on steps for slice sampler (default 10) 
+#' @param hpriorpar hyperpameter values for priors on Prior parameters
+#' @param bl vector with block assignments for blocking method
+#' @return List with posterior samples for cluster assignments (Z),
+#'         Prior parameters and distortion probabilities (Params)
+#' @export
+SampleCluster <- function(data, Prior, burn, nsamples, truncds, samds=TRUE, spacing=1000, w=3, m=10, hpriorpar=NULL, bl=NULL){
+    x <- DataRemap(data)
+    N <- nrow(x) 
+    nfields <- ncol(x)
+    proportions <- lapply(1:nfields,calcProp,data=x)
+    # Initial clustering
+    z0 <- sample(1:(N), N, rep=TRUE)
+    # No gaps
+    z <- as.numeric(factor(z0 , labels = seq(1,length(unique(z0)))))
+    # Initial Prior parameter values
+    x1 <- SetInit(Prior, N)
+    samind <- SamInd(Prior)
+    # Beta prior for distortion parameters
+    bmean <- 0.005
+    bsd <- 0.01
+    cb <- abeta(bmean, bsd)
+    db <- cb/bmean - cb
+    hpriords <- c(cb, db)
+    pdist <- cb/(cb+db)
+    # Initial value for distortion parameters
+    betas <- rep(pdist,nfields)
+    
+    # blocking fields
+    if (is.null(bl)!=1){
+        for(i in 1:length(bl)){
+            betas[bl[i]] <- 0.00001
+        }
+    }
+    # hyperparameter values for priors on Prior parameters
+    # if statement to allow user to specify priors
+    if (is.null(hpriorpar)==1){
+    	hpriorpar <- hpriorpar(Prior, N)
+    }
+    # lo - lower limit distribution support (slice)
+    # up - upper limit distribution support (slice)
+    loup <- lowupSlice(Prior)
+    lo <- loup$lo
+    up <- loup$up
+    
+    s <- matrix(0, nsamples, length(x1) + nfields)
+    zM <- matrix(0,  nsamples, N)
+    
+    lx <- loglikxSP(betas, x, z, proportions)
+    ll <- 1
+    for (i in 1:(burn + nsamples)){
+        if ((i %% 10)==0){
+    		print(i)
+        }
+        Khat <- length(unique(z))
+        Nk <- as.vector(table(z))
+         # univariate slice sampler for all parameters
+         x1 <- unislicem(x1, N, Khat,lx, Nk, hpriorpar, w, m, lo, up, Prior, samind)
+         if(samds==TRUE){
+             lods <- 0
+             upds <- truncds
+             betas <- unislicespb1(betas, x, z, proportions, hpriords, w, m, lods, upds,
+             x1, N, Khat, Nk, hpriorpar, Prior)
+         }else{
+             betas <- rep(truncds,nfields)
+         }
+         # parameters of reseating algortihm #
+        AB <- SetParam(Prior, x1, N)
+        A <- AB$A
+        B <- AB$B
+        z1 <- Web_SamplerSP(x, z, A, B, betas, proportions, 1, spacing)
+        # no gaps in cluster assigment #
+        z <- as.numeric(factor(z1[1,], labels = seq(1,length(unique(z1[1,])))))
+        #print(length(unique(z)))
+        #print(conc)
+        lx <- loglikxSP(betas, x, z, proportions)
+        #loglik[i] <- lx
+        if((i > burn) ){
+            #print("ll")
+            #print(ll)
+            zM[ll, ] <- z
+            s[ll,] <- c(x1,betas)
+            ll=ll+1
+        }
+    }
+    colnames(s) <- NameParam(Prior, nfields)
+    return(list(Z=zM,Params=s))
+}
+
+#' Posterior samples of cluster assignments for ESCD model
+#'
+#' @param data Data frame containing only categorical variables
+#' @param burn MCMC burn-in period
+#' @param nsamples MCMC iterations after burn-in
+#' @param truncds Truncation value for distortion probabilities (betas)
+#' @param samds Indicator to sample the fields' distortion probabilities (betas)
+#' @param spacing Thinning for chaperones algorithm (default 1000)
+#' @param w Step size for slice sampler (default 3)
+#' @param m Limit on steps for slice sampler (default 10)
+#' @param hpriorpar hyperpameter values for priors on Prior parameters
+#' @param bl vector with block assignments for blocking method
+#' @return List with posterior samples for cluster assignments (Z),
+#'         Prior parameters and distortion probabilities (Params)
+#' @export
+SampleClusterESCD <- function(data, burn, nsamples, truncds, samds=TRUE, spacing=1000, w=3, m=10, hpriorpar=NULL, bl=NULL){
+    x <- DataRemap(data)
+    N <- nrow(x) 
+    nfields <- ncol(x)
+    proportions <- lapply(1:nfields,calcProp,data=x)
+    # Initial clustering
+    z0 <- sample(1:(N), N, rep=TRUE)
+    # No gaps
+    z <- as.numeric(factor(z0 , labels = seq(1,length(unique(z0)))))
+    Prior <- "ESCD"
+    # Initial Prior parameter values
+    x1 <- SetInit(Prior, N)
+    samind <- SamInd(Prior) #sample r and p, alpha fixed
+    # max cluster size
+    M <- 100 
+    # Beta prior for distortion parameters
+    bmean <- 0.005
+    bsd <- 0.01
+    cb <- abeta(bmean, bsd)
+    db <- cb/bmean - cb
+    hpriords <- c(cb, db)
+    pdist <- cb/(cb+db)
+    # Initial value for distortion parameters
+    betas <- rep(pdist,nfields)
+    
+    # blocking fields
+    if (is.null(bl)!=1){
+        for(i in 1:length(bl)){
+            betas[bl[i]] <- 0.00001
+        }
+    }
+    # hyperpameter values for priors on Prior parameters
+    # if statement to allow user to specify priors
+    if (is.null(hpriorpar)==1){
+    	hpriorpar <- hpriorpar(Prior, N)
+    }
+    
+    # lo - lower limit distribution support (slice)
+    # up - upper limit distribution support (slice)
+    loup <- lowupSlice(Prior)
+    lo <- loup$lo
+    up <- loup$up
+
+    s <- matrix(0, nsamples, length(x1)+nfields)
+    zM <- matrix(0,  nsamples, N)
+    #loglik <- rep(0, burn + nsamples)
+    lx <- loglikxSP(betas, x, z, proportions)
+    ll <- 1
+    Khat <- length(unique(z))
+    tz <- table(z)
+    Nk <- as.vector(tz)
+    if(max(tz) >= M){
+        M <- max(tz)
+    }
+    Lm <- table(factor(tz, levels=1:M))
+    alpha0 = x1[1];
+    r0 = x1[2];
+    p0 = x1[3];
+    lmu0 = lgamma(seq(M) + r0) + (seq(M))*log(p0) + r0*log(1-p0) - log(1-(1-p0)^r0)-
+    lgamma(r0) - lgamma(seq(M) + 1)
+    mu0 = exp(lmu0)
+    
+    for (i in 1:(burn + nsamples)){
+    	if ((i %% 10)==0){
+    		print(i)
+        }
+        # univariate slice sampler for all parameters
+        x1 <- unislicemESCD(x1, lx, Lm, mu0, hpriorpar, w, m, lo, up, samind)
+        if(samds==TRUE){
+            lods <- 0
+            upds <- truncds
+            betas <- unislicespb1(betas, x, z, proportions, hpriords, w, m, lods, upds,
+            x1, N, Khat, Nk, hpriorpar, Prior)
+        }else{
+            betas <- rep(truncds,nfields)
+        }
+        # parameters of reseating algortihm #
+        alpha0 <- x1[1];
+        r0 <- x1[2];
+        p0 <- x1[3];
+        # Sampling mu from dirichlet of size max cluster size
+        lmu0 <- lgamma(seq(M) + r0) + (seq(M))*log(p0) + r0*log(1-p0) - log(1-(1-p0)^r0)-
+        lgamma(r0) - lgamma(seq(M) + 1)
+        mu0 <- exp(lmu0)
+        alphasDM <- c(alpha0*mu0 + Lm, abs(alpha0*(1-sum(mu0))))
+        mus <- rdirichlet(alphasDM)
+        AB <- SetParamESCD(mus, N, M)
+        A <- AB$A
+        B <- AB$B
+        z1 <- Web_SamplerSP(x, z, A, B, betas, proportions, 1, spacing)
+        # no gaps in cluster assigment #
+        z <- as.numeric(factor(z1[1,], labels = seq(1,length(unique(z1[1,])))))
+        #print(length(unique(z)))
+        Khat <- length(unique(z))
+        tz <- table(z)
+        Nk <- as.vector(tz)
+        if(max(tz) >= M){
+            M <- max(tz)
+        }
+        Lm <- table(factor(tz, levels=1:M))
+        lx <- loglikxSP(betas, x, z, proportions)
+        #loglik[i] <- lx
+        if((i > burn)){
+            #print("ll")
+            #print(ll)
+            zM[ll, ] <- z
+            s[ll,] <- c(x1,betas)
+            ll=ll+1
+        }
+    }
+    colnames(s) <- NameParam(Prior, nfields)
+    return(list(Z=zM,Params=s))
+}
+
+
+
+
+
+
