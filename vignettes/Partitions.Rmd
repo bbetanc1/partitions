@@ -11,8 +11,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-This vignette shows how to use
-the partitions package to perform entitiy resolution with categorical variables using partition-based Bayesian clustering models.
+This vignette shows how to use the partitions package to perform entity resolution with categorical variables using partition-based Bayesian clustering models.
 
 ## Datasets
 
@@ -38,7 +37,7 @@ tail(Id_Italy)
 
 The package contains the implemetation of four random partition models that are used to perform entitiy resolution as a clustering task: 
 
-* Two traditional clustering models: Dirichlet process (DP) mixtures and Pitman–Yor process (PY) mixtures. 
+* Two traditional random partition models: Dirichlet process (DP) mixtures and Pitman–Yor process (PY) mixtures. 
 * Two random partition models that exhibit the microclustering property, referred to as: The ESCNB model and the ESCD model.
 
 ## Posterior Samples

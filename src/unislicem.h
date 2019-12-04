@@ -465,15 +465,5 @@ NumericVector unislicem1(NumericVector x1, int N, int Khat, double lx,
     return xx2;
 }
 
-
-
-// Example usage:
-/*** R
-pK = rep(1/30, 30)  # uniform on {1,...,30}
-pK = dpois(seq(0,100),5)  # K-1 ~ Poisson(5)
-pK = dgeom(seq(0,1000),0.1)  # K-1 ~ Geometric(0.1)
-b <- b_MFM(log(pK),1,100,50)
-*/
-
 #endif
 

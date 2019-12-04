@@ -113,12 +113,9 @@ double logpriorf(NumericVector x1, int N, int Khat,
             term = term + lgamma(rnb + Nk[i]) - lgamma(rnb);
         }
         lp = N*log(pnb) + lgamma(anb + Khat) + Khat*(log(qnb) +
-        rnb*log(1-pnb) - log(1 - pow((1-pnb),rnb))) +
-        term + anb*log(1-qnb) - log(1 - pow((1-qnb),anb)) -
-	lgamma(anb) + (ag1-1)*log(anb) - bg1*anb +
-        (ag2-1)*log(rnb) - bg2*rnb +  (ab1 - 1)*log(qnb) +
-        (bb1 - 1)*log(1 - qnb) + (ab2 - 1)*log(pnb) +
-        (bb2 - 1)*log(1 - pnb);
+          rnb*log(1-pnb) - log(1 - pow((1-pnb),rnb))) +
+          term + (ag2-1)*log(rnb) - bg2*rnb + (ab2 - 1)*log(pnb) +
+          (bb2 - 1)*log(1 - pnb);
     }
     return lp;
 }
