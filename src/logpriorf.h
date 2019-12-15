@@ -96,26 +96,19 @@ double logpriorf(NumericVector x1, int N, int Khat,
         (ab2 - 1)*log(pnb) + (bb2 - 1)*log(1 - pnb);
     }
     if (Prior=="NBNBF"){
-        double anb = xx1[0];
-        double qnb = xx1[1];
-        double rnb = xx1[2];
-        double pnb = xx1[3];
-        double ag1 = hpriorpar[0];
-        double bg1 = hpriorpar[1];
-        double ag2 = hpriorpar[2];
-        double bg2 = hpriorpar[3];
-        double ab1 = hpriorpar[4];
-        double bb1 = hpriorpar[5];
-        double ab2 = hpriorpar[6];
-        double bb2 = hpriorpar[7];
-        double term=0.0;
-        for (int i=0; i<Khat; i++) {
-            term = term + lgamma(rnb + Nk[i]) - lgamma(rnb);
-        }
-        lp = N*log(pnb) + lgamma(anb + Khat) + Khat*(log(qnb) +
-          rnb*log(1-pnb) - log(1 - pow((1-pnb),rnb))) +
-          term + (ag2-1)*log(rnb) - bg2*rnb + (ab2 - 1)*log(pnb) +
-          (bb2 - 1)*log(1 - pnb);
+      double rnb = xx1[0];
+      double pnb = xx1[1];
+      double ag = hpriorpar[0]; // gamma prior for r
+      double bg = hpriorpar[1];
+      double ab = hpriorpar[2]; // beta prior for p
+      double bb = hpriorpar[3];
+      double term=0.0;
+      for (int i=0; i<Khat; i++) {
+        term = term + lgamma(rnb + Nk[i]) - lgamma(rnb);
+      }
+      lp = N*log(pnb) + lgamma(Khat + 1) + Khat*(rnb*log(1-pnb) -
+        log(1 - pow((1-pnb),rnb))) + term +
+        (ag-1)*log(rnb) - bg*rnb + (ab - 1)*log(pnb) + (bb - 1)*log(1 - pnb);
     }
     return lp;
 }
