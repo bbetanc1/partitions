@@ -1,0 +1,2163 @@
+head()sv_dat
+head(sv_data)
+sim.by <- 1*(sv_data[,"byyear"][rec.pair[,1]]==sv_data[,"byyear"][rec.pair[,2]])
+sim.by <- 1*(sv_data[,"byear"][rec.pair[,1]]==sv_data[,"byear"][rec.pair[,2]])
+sim.bm <- 1*(sv_data[,"bmonth"][rec.pair[,1]]==sv_data[,"bmonth"][rec.pair[,2]])#
+sim.bd <- 1*(sv_data[,"bday"][rec.pair[,1]]==sv_data[,"bday"][rec.pair[,2]])
+sim.v2 <- 1*(dat[,"first_name"][rec.pair[,1]]==dat[,"first_name"][rec.pair[,2]])#
+sim.v3 <- 1*(dat[,"last_name"][rec.pair[,1]]==dat[,"last_name"][rec.pair[,2]])#
+sim.v4 <- 1*(dat[,"department"][rec.pair[,1]]==dat[,"department"][rec.pair[,2]])#
+sim.v5 <- 1*(dat[,"muni"][rec.pair[,1]]==dat[,"muni"][rec.pair[,2]])
+sim.v2 <- 1*(sv_data[,"first_name"][rec.pair[,1]]==sv_data[,"first_name"][rec.pair[,2]])#
+sim.v3 <- 1*(sv_data[,"last_name"][rec.pair[,1]]==sv_data[,"last_name"][rec.pair[,2]])#
+sim.v4 <- 1*(sv_data[,"department"][rec.pair[,1]]==sv_data[,"department"][rec.pair[,2]])#
+sim.v5 <- 1*(sv_data[,"muni"][rec.pair[,1]]==sv_data[,"muni"][rec.pair[,2]])
+link <- 1*(match_group_id[rec.pair[,1]]==match_group_id[rec.pair[,2]])
+link <- 1*(sv_data$match_group_id[rec.pair[,1]]==sv_data$match_group_id[rec.pair[,2]])
+# Matrix of similarity scores#
+similarities <- cbind(sim.v2, sim.v3, sim.v3, sim.v5)#
+#
+# Maximum and median similarity (for screening purposes)#
+sim.max <- apply(similarities,1,max)#
+sim.median <- apply(similarities,1,median)#
+#
+# Keep only record pairs with similarities of at least 0.8 on at least two fields#
+keep <- which(sim.median>=0.80)
+sim.max <- apply(similarities,1,max)
+traceback()
+1300+ 812 + 3393.11	 + 998 + 1471 + 1054 + 1082 + 344
+10454.11 + 2200
+meals <- 4.50*350
+meals
+meals <- 5*350 + 20*350 + 20*350
+meals
+meals <- 5*350 + 20*350 + 40*350
+meals <- 5*350 + 20*350 + 40*350 + 200*12
+meals
+100*12
+100*4*12
+4800+1200+1500+1000+1000
+100*12
+install.packages("snow")
+source('~/work_on/projects/mauricio-el-salvador-2014/test2018/DedupTest2018.R', chdir = TRUE)
+130*2000
+200*2200
+150*2200
+29+5
+39+5
+29+5
+under.exam.one.no.laplace <- c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44)
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkUnder,1, min)#
+test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one.no.laplace)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,0,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+under.exam.one.no.laplace <- c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44)#
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkUnder,1, min)#
+test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one.no.laplace)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44)/68
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkUnder,1, min)#
+test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one.no.laplace)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))/68
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkUnder,1, min)#
+test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one.no.laplace)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one.no.laplace)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one)
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,0,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkUnder,1, min)#
+test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*max(under.exam.one.no.laplace, under.exam.one))#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.8*under.exam.one)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+grad.exam.one.no.laplace <- c(29,47,22,24,37,38,19,45,27,37,53,42,37,52,31,28,25,15,54,39)
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil", "Prueksirl.Nond","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+grad.exam.one <- c(29,42,22,24,37,38,14,40,22,32,48,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,47,22,24,37,38,19,45,27,37,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+numberofHW <- 3#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.7*max(grad.exam.one,grad.exam.one.no.laplace))#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one , h1grad, h2grad, h3grad,))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil", "Prueksirl.Nond","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+grad.exam.one <- c(29,42,22,24,37,38,14,40,22,32,48,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,47,22,24,37,38,19,45,27,37,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68
+numberofHW <- 3#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage
+(tempGradeGrad <-.3*homeworkGradAverage + 0.7*max(grad.exam.one,grad.exam.one.no.laplace))
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one , h1grad, h2grad, h3grad,))
+(tempGradeGrad <-.3*homeworkGradAverage + 0.7*max(grad.exam.one, grad.exam.one.no.laplace))
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one , h1grad, h2grad, h3grad,))
+head(tempgradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one , h1grad, h2grad, h3grad,))
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one , h1grad, h2grad, h3grad))
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace,h1grad, h2grad, h3grad))
+(rank <- gradGrade[order(-tempGradeGrad),])
+rownames(rank) <- 1:nrow(rank)
+rank
+136/2
+363 + 68
+90/2
+202/2
+42/2
+363+68+45+101+21
+38/62
+25/62
+Library/Containers/com.apple.mail/Data/Library/Mail Downloads/9D80B226-2951-44A4-AC5E-A882BDCC38F3/errorPairs.RData
+load(Library/Containers/com.apple.mail/Data/Library/Mail Downloads/9D80B226-2951-44A4-AC5E-A882BDCC38F3/errorPairs.RData)
+load(""load('~/Desktop/errorPairs.RData'))
+load('~/Desktop/errorPairs.RData')
+ls()
+head(errorPairs)
+198+149
+499-347
+# Samples from a truncated gamma with#
+# truncation (t, infty), shape a, and rate b#
+# Input: t,a,b#
+# Output: truncated Gamma(a,b)#
+sampleTrunGamma <- function(t, a, b){#
+  p0 <- pgamma(t, shape = a, rate = b)#
+  # Use the modification of the inverse CD method#
+  x <- runif(1, min = p0, max = 1)#
+  y <- qgamma(x, shape = a, rate = b)#
+  return(y)#
+}#
+#
+# Gibbs sampler#
+# z is the fully observe data#
+# c is censored data#
+# n.iter is number of iterations#
+# init.theta and init.miss are initial values for sampler#
+# r,a, and b are fixed parameters#
+# burnin is number of iterations to use as burnin#
+sampleGibbs <- #
+  function(z, c, n.iter, init.theta, init.miss, r, a, b, burnin = 1){#
+  z.sum <- sum(z); m <- length(c); n <- length(z) + m#
+  miss.vals <- init.miss #
+  res <- matrix(NA, nrow = n.iter, ncol = 1 + m)#
+  for (i in 1:n.iter){#
+    var.sum <- z.sum + sum(miss.vals)#
+    theta <- rgamma(1, shape = a + n*r, rate = b + var.sum)#
+    miss.vals <- sapply(c, function(x) {sampleTrunGamma(x, r, theta)})#
+    res[i,] <- c(theta, miss.vals)#
+  } #
+  return(res[burnin:n.iter,])#
+} #
+res <- sampleGibbs(z, c, n.iter, init.theta, init.missing, #
+                   r, a, b) #
+plot(1:n.iter, res[,1], pch = 16, cex = .35,#
+     xlab = "Iteration", ylab = expression(theta),#
+     main = expression(paste("Traceplot of ", theta)))
+set.seed(5983)#
+# set parameter values and enter data#
+r <- 10#
+a <- 1#
+b <- 1#
+z <- c(3.4,2.9,1.4,3.2,1.8,4.6,2.8)#
+c <- c(1.2,1.7,2.0,1.4,0.6)#
+n.iter <- 100#
+init.theta <- 1#
+init.missing <- #
+  rgamma(length(c), shape = r, rate = init.theta)
+res <- sampleGibbs(z, c, n.iter, init.theta, init.missing, #
+                   r, a, b)
+head(res)
+dim(res)
+plot(1:n.iter, res[,1], pch = 16, cex = .35,#
+     xlab = "Iteration", ylab = expression(theta),#
+     main = expression(paste("Traceplot of ", theta)))
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)
+missing.index <- 3
+plot(1:n.iter, res[, which(missing.index == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+row.value <- c(2,3,4,5,6)#
+for (ind in missing.index){#
+  x.lab <- bquote(z[.(ind)])#
+  plot(1:n.iter, res[,which(row.value == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+row.value <- c(2,3,4,5,6)#
+for (ind in row.value){#
+  x.lab <- bquote(z[.(ind)])#
+  plot(1:n.iter, res[,which(row.value == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+col.value <- c(2,3,4,5,6)#
+for (ind in col.value){#
+  x.lab <- bquote(z[.(ind)])#
+  plot(1:n.iter, res[,which(row.value == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+col.value <- c(2,3,4,5,6)#
+for (ind in col.value){#
+  x.lab <- bquote(z[.(missing.index)])#
+  plot(1:n.iter, res[,which(row.value == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+for (ind in missing.index){#
+  x.lab <- bquote(z[.(ind)])#
+  plot(1:n.iter, res[,which(missing.index == ind)], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+par(mfrow=c(3,2))#
+missing.index <- c(3,8,9,10,12)#
+for (ind in missing.index){#
+  x.lab <- bquote(z[.(ind)])#
+  plot(1:n.iter, res[,which(missing.index == ind)+1], pch = 16, cex = .35,#
+       xlab = "Iteration", ylab = x.lab,#
+       main = bquote(paste("Traceplot of ", .(x.lab))))#
+}
+2463*.1
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil", "Prueksirl.Nond","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil", "Prueksirl.Nond","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two#
+#
+numberofHW <- 3#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.7*pmax(grad.exam.one, grad.exam.one.no.laplace))#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace,h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil", "Prueksirl.Nond","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")
+length(gradName)
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34
+length(h1grad)
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two#
+#
+numberofHW <- 3#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.7*pmax(grad.exam.one, grad.exam.one.no.laplace))#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace,h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two <- c(31,61,0,62,57,52,52,62,58,61,62,61,45,58,50,49,60,51,59,58)/62#
+#
+numberofHW <- 3#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.4*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*grad.exam.two#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace,h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.4*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*grad.exam.two#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+(tempGradeGrad <-.3*homeworkGradAverage + 0.3*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*grad.exam.two#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+grad.exam.two
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4")#
+#test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/4#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.3*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*grad.exam.two#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+homeworkGradAverage
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4")#
+test <- apply(homeworkGrad,1, min)#
+test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/(numberofHW-1)#
+homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-.3*homeworkGradAverage + 0.3*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*grad.exam.two#
+hist(tempGradeGrad)#
+summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+test <- apply(homeworkGrad,1, min)
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test
+homeworkGradAverage <- homeworkGradSumAdjusted/3
+(tempGradeGrad <-.3*homeworkGradAverage + 0.3*pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*grad.exam.two
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))
+(rank <- gradGrade[order(-tempGradeGrad),])
+summary(tempGradeGrad)
+homeworkGradAverage
+grad.exam.one
+grad.exam.two
+0.3*pmax(grad.exam.one, grad.exam.one.no.laplace))
+0.3*pmax(grad.exam.one, grad.exam.one.no.laplace)
+grad.exam.one
+grad.exam.one.no.laplace
+max(grad.exam.one,grad.exam.one.no.laplace)
+pmax(grad.exam.one,grad.exam.one.no.laplace)
+pmax(grad.exam.one, grad.exam.one.no.laplace)
+0.3*(homeworkGradAverage) + 0.3*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*(grad.exam.two)
+(rank <- gradGrade[order(-tempGradeGrad),])
+rownames(rank) <- 1:nrow(rank)
+rank
+0.3*(homeworkGradAverage) + 0.3*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*(grad.exam.two)
+tempGradeGrad <-0.3*(homeworkGradAverage) + 0.3*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.4*(grad.exam.two)
+tempGradeGrad
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))
+(rank <- gradGrade[order(-tempGradeGrad),])
+rownames(rank) <- 1:nrow(rank)
+rank
+(tempGradeGrad <-0.3*(homeworkGradAverage) + 0.4*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*(grad.exam.two)#
+#
+#hist(tempGradeGrad)#
+#summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank#
+#
+plot(hist(tempGradeGrad))#
+plot(hist(tempGradeUnder))
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two <- c(31,61,0,62,57,52,52,62,58,61,62,61,45,58,50,49,60,51,59,58)/62#
+#
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4")#
+test <- apply(homeworkGrad,1, min)#
+#test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+#homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-0.3*(homeworkGradAverage) + 0.4*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*(grad.exam.two)#
+#
+#hist(tempGradeGrad)#
+#summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+under.exam.two <- c(62,51,52,52,57,#
+44,0,43,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,43,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.7*pmax(under.exam.one.no.laplace, under.exam.one))#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+hist(tempGradeUnder)#
+summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+length(under.exam.one)
+length(under.exam.two)
+under.exam.two <- c(62,51,52,52,57,#
+44,0,43,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 3#
+homeworkUnder <- data.frame(h1under, h2under, h3under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.7*pmax(under.exam.one.no.laplace, under.exam.one))#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, hwunder)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.7*pmax(under.exam.one.no.laplace, under.exam.one))#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+homeworkUnder <- data.frame(h1under, h2under, h3under, hw4under)
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,43,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, hw4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)
+numberofHW <- 4
+homeworkUnder <- data.frame(h1under, h2under, h3under, hw4under)
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")
+test <- apply(homeworkUnder,1, min)
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)
+homeworkUnderAverage
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two
+)
+homeworkUnderAverage
+pmax(under.exam.one.no.laplace, under.exam.one)
+under.exam.two
+under.exam.two <- c(62,51,52,52,57,#
+44,0,43,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+summary(under.exam.two)
+summary(grad.exam.two)
+plot(density(under.exam.one))
+curve(density(grad.exam.two))
+plot(density(grad.exam.two))
+summary(under.exam.one)
+summary(grad.exam.two)
+summary(grad.exam.one)
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,47,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,57,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+sd(under.exam.two)
+var(under.exam.two)
+var(under.exam.one)
+sd(under.exam.one)
+plot(density(under.exam.one))
+plot(density(under.exam.two))
+2*log(5395)
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,57,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+gradName<- c("Bellows", "Brallich", "Burinskiy", "Calkins", "Yanyou Chen", "YenHua Chen", "Cherry", "Moohyung Cho", "Foster", "Gerken", "Guirola", "Hamilton", "Ida Hjermitslev", "Yunan Hu", "Ran Huo", "Jain", "Yuqi Jiang", "Dewran Kocak", "Xioahui Li", "Jinjie Lin", "Liu Lu", "Reuben", "Marco Morucci", "Oberg", "Takashi Okamoto", "Lei Qian", "Dinghan Shen", "Silverman", "Spater", "Tellez", "Guoyin Wang", "Webster", "Andrew Wong", "Yu", "Azeem Zamam", "Zhang", "Zhao")  #
+#
+gradNumber <- seq(1:length(gradName))#
+## grad students  #
+h1grad <- c(43,45,42,46,49,45,42,49,45,43,48,42,41,45,48,39,33,0,48,46,50,50,46,42,48,50,42,42,42,40,41,48,15,45,50,48,44)/50#
+#
+h2grad <- c(64,69,63,70,69,70,70,70,69,68,67,69,69,70,38,70,70,69,70,70,70,57,67,67,70,70,70,65,70,70,70,70,70,70,70,70,69)/70#
+#
+h3grad<- c(41,39.5,44,44,42,42,43,44,38,41,43,36,44,44,42,44,36,42,42,41,43,40,40,44,44,43,40,43,44,44,44,40,44,43,44,43,44)/44#
+#
+h4grad <- #
+#
+h4grad<- #
+c(70,70,70,66,70,0,68,70,70,0,66,66,70,70,70,0,0,0,70,68,70,66,68,70,70,68,70,0,70,68,68,70,0,70,68,70,70)/70#
+#
+h5grad <-#
+c(50,0,55,50,55,0,55,60,55,0,0,0,60,60,50,0,0,0,60,50,55,55,60,50,60,55,60,0,50,50,60,50,0,60,60,60,50)/60#
+#
+h6grad <- c(51,111,0,0,111,0,111,109,80,0,0,109,111,111,111,0,0,0,111,111,111,111,109,0,51,111,109,0,111,0,111,0,0,0,111,0,110)/111#
+#
+midterm1grad <- c(39,34,32,52,55,19,36,42,30,36,25,35,36,46,51,30,1,21,45,37,61,37,32,39,39,29,34,46,28,26,50,27,16,59,59,47,50)/73#
+midterm2grad <- c(46,48,53,50,53,0,53,54,51,0,34,53,50,52,50,0,0,0,48,54,53,50,52,53,49,47,45,0,45,48,47,53,0,47,53,50,50)/54#
+#
+finalExamGrad <- c(34,47,53,40,48,0,41,36,38,0,0,42,44,46,51,0,0,0,47,53,49,38,40,48,41,41,53,0,36,44,52,37,0,42,55,47,53)/60#
+#
+finalExamGradNew <- c(34,47,53,40,48,41,36,38,42,44,46,51,47,53,49,38,40,48,41,41,53,36,52,37,42,55,47,53)/60#
+#
+plot(density(finalExamGradNew), main="Final Exam Grads")#
+summary(finalExamGradNew)#
+#
+numberofHW <- 5#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad, h5grad, h6grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4", "hw5", "hw6")#
+test <- apply(homeworkGrad,1, min)#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/5#
+(tempGradeGrad <-.25*homeworkGradAverage + 0.30(midterm1grad midterm2grad)/2 + 0.15*finalExamGrad)#
+#
+gradName<- c("Bellows", "Brallich", "Burinskiy", "Calkins", "Yanyou Chen", "YenHua Chen", "Cherry", "Moohyung Cho", "Foster", "Gerken", "Guirola", "Hamilton", "Ida Hjermitslev", "Yunan Hu", "Ran Huo", "Jain", "Yuqi Jiang", "Dewran Kocak", "Xioahui Li", "Jinjie Lin", "Liu Lu", "Reuben", "Marco Morucci", "Oberg", "Takashi Okamoto", "Lei Qian", "Dinghan Shen", "Silverman", "Spater", "Tellez", "Guoyin Wang", "Webster", "Andrew Wong", "Yu", "Azeem Zamam", "Zhang", "Zhao")#
+#
+head(graduateStudents <- data.frame(gradName,tempGradeGrad, midterm1grad, midterm2grad, h1grad, h2grad, h3grad, h4grad, h5grad))#
+#
+(rank <- graduateStudents[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two <- c(31,61,0,62,57,52,52,62,58,61,62,61,45,58,50,49,60,51,59,58)/62#
+#
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4")#
+test <- apply(homeworkGrad,1, min)#
+#test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+#homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-0.3*(homeworkGradAverage) + 0.4*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*(grad.exam.two)#
+#
+#hist(tempGradeGrad)#
+#summary(tempGradeGrad)#
+#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad))#
+#
+(rank <- gradGrade[order(-tempGradeGrad),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+525*.20
+525-105
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,47,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,47,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under, h4under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+A <- matrix(1,ncol=2,nrow=3)
+A
+dim(A)
+a <- seq(1,1,1)
+a
+a <- c(1,1,1)
+a
+a <- a^T
+a
+A - a
+gradName <- c("Ashoff.Tyler", "Assad.Serge", "Belac.Ana", "Berlind.Davis", "Feng.Qizhang", "Gupta, Pranjal", "Knigg.Sebastian", "Ko.Kuei.Yueh", "Liang.Yue", "Luo.Yi", "Mehta.Nikhil","Sahay.Harshit", "Schepele.Nathan", "Sharma.Shubi", "Tang.Yifan", "Wilson.Jennifer", "Xie.Runxin", "Xu.Frank", "Yang.Tian", "Zheng.Tongshu")#
+h1grad <- c(0,34,32,33,33,34,34,34,34,34,24,33,33,33,31,34,34,34,34,34)/34#
+#
+h2grad <- c(46,87,86,90,89,90,77,90,86,82,90,77,77,74,87,46,90,82,87,90)/90#
+#
+h3grad <- c(85, 90, 82, 87, 85,90,80,85,85,90,90,90,87,90,87,87,87,87,82,90)/90#
+#
+h4grad <- c(35,46,22,29,37,38,17,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one <- c(29,46,22,29,37,38,18,40,22,32,51,42,32,52,26,23,20,15,54,34)/68#
+#
+grad.exam.one.no.laplace <- c(29,51,27,29,37,38,23,45,27,53,53,42,37,52,31,28,25,15,54,39)#
+#
+grad.exam.one.no.laplace <- (grad.exam.one.no.laplace - 5)/68#
+#
+grad.exam.two <- c(31,61,0,62,57,52,52,62,58,61,62,61,45,58,50,49,60,51,59,58)/62#
+#
+numberofHW <- 4#
+homeworkGrad <- data.frame(h1grad, h2grad, h3grad,h4grad)#
+names(homeworkGrad) <- c("hw1", "hw2", "hw3", "hw4")#
+test <- apply(homeworkGrad,1, min)#
+#test = 0#
+homeworkGradSumAdjusted <- rowSums(homeworkGrad) - test#
+homeworkGradAverage <- homeworkGradSumAdjusted/3#
+#homeworkGradAverage <- homeworkGradAverage#
+#
+(tempGradeGrad <-0.3*(homeworkGradAverage) + 0.4*(pmax(grad.exam.one, grad.exam.one.no.laplace)) + 0.3*(grad.exam.two))#
+#
+# #hist(tempGradeGrad)#
+# #summary(tempGradeGrad)#
+head(gradGrade <- data.frame(gradName, tempGradeGrad, grad.exam.one, grad.exam.one.no.laplace, grad.exam.two, h1grad, h2grad, h3grad, h4grad))#
+#
+ (rank <- gradGrade[order(-tempGradeGrad),])#
+#
+ rownames(rank) <- 1:nrow(rank)#
+#
+ rank
+2200*6
+data <- read.csv("~/Dropbox/a_new_research_7.1.13/syria-UN-report/ir-for-beka.csv", header=TRUE, sep="|")
+head(data)
+dim(data)
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,47,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+54,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under, h4under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+25           Ding.Bob      0.7277462      0.5147059                 0.5147059
+40/68
+35/68
+underName <- c("Alexander.Ben", "Cahoon.Jarod", "Cai.Jie",#
+"Cai.Michael", "Chandler.Tess","Chen.Naya","Dias.Matheus","Ding.Bob","Epstein.Jacob","Fang.Daisy","Ferry.John","Holland.Ethan","Hossain.Shamiskh", "Hsiao.ManLin", "Hu.Diane", "Jiang.Melody","Lian.Tyler", "Liu.Sophia", "Calvin.Ma", "Metz.Audreya", "Model.Michael", "Needleman.Jessica", "Rajan.Hari", "Schafer.Peyton", "Senottuvelu.Rahul", "Spottiswood.Daniel", "Suh. Christopher", "Tan.Michael", "Tan.Zuzu","Moriah.Taylor", "Tesha.Revo", "Tsang.Katie", "Turpin.Miles", "Wang.Harry" ,"Wolff.Chris", "Xiao.Claire", "Xie.Harry", "Xiong.Amy", "Yoo.Jaeyun", "Zhang.Qiefeng", "Zou.Justina")#
+#
+h1under <- (c(34,32,34,0,#
+24,30,24,27,#
+29,24,24,34,#
+24,34,34,34,#
+24,20,34,34,#
+24,20,34,34,32,#
+24,0,34,34,34,24,29,34,34,34,34,34,34,24,34,24)/34)#
+#
+h2under <- (c(90,90,90,82,#
+76,90,77,90,#
+0,90,0,86,#
+84,87,86,87,#
+87,86,82,81,#
+83,89,72,81,#
+0,77,78,80,#
+76,0,87,87,#
+74,86,81,87,#
+83,90,80,90,90))/90#
+#
+h3under <- (c(90,90,90,90,#
+87,90,90,85,#
+90,90,0,90,#
+90,90,87,90,#
+90,90,90,80,#
+85,90,90,90,#
+90,90,90,90,#
+90,0,87,90,#
+0,90,90,90,#
+90,90,90,90,90))/90#
+#
+h4under <- (c(#
+35,0,35,0,#
+33,29,17,35,#
+35,34,0,29,#
+35,31,35,34,#
+35,34,34,0,#
+29,33,31,35,#
+34,29,32,31,#
+32,0,10,0,#
+30,34,35,32,#
+35,31,31,35,32))/35#
+under.exam.one <- (c(41,27,39,26,#
+29,32,23,35,#
+55,35,20,46,#
+37,25,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34, 30, 35, 32,#
+29,32,30,27,#
+33,31,46,33,#
+35,41,34,49,39))/68#
+#
+# correction for the NB question #
+under.exam.one + 1 #
+#
+under.exam.one.no.laplace <- (c(#
+41,27,39,31,#
+34,32,28,40,#
+55,40,25,46,#
+37,30,38,31,#
+50,21,35,42,#
+34,41,34,38,#
+34,35,35,37,#
+34,32,35,32,#
+38,36,46,33,#
+35,41,34,49,44))#
+#
+under.exam.two <- c(62,51,52,52,57,#
+44,0,47,59,#
+59,54,54,61,#
+38,59,55,62,#
+51,59,49,57,#
+61,47,41,60,#
+55,60,#
+48,59,0,61,#
+59,61,51,51,#
+50,58,0,52,#
+59,61)/62#
+#
+under.exam.one.no.laplace <- (under.exam.one.no.laplace - 5)/68#
+# correction for the negative binomial question #
+under.exam.one.no.laplace + 1#
+#
+numberofHW <- 4#
+homeworkUnder <- data.frame(h1under, h2under, h3under, h4under)#
+#names(homeworkUnder) <- c("exam1", "exam2", "final","hw1", "hw2", "hw3", "hw4", "hw5","hw7","hw8","hw9")#
+names(homeworkUnder) <- c("hw1", "hw2", "hw3","hw4")#
+test <- apply(homeworkUnder,1, min)#
+#test = 0#
+homeworkUnderSumAdjusted <- (rowSums(homeworkUnder) - test)#
+homeworkUnderAverage <- (homeworkUnderSumAdjusted/3)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.2*under.exam.one + 0.2*under.exam.two + under.final*.30)#
+#
+(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*pmax(under.exam.one.no.laplace, under.exam.one) +  0.3*under.exam.two)#
+#
+#(tempGradeUnder <-0.30*homeworkUnderAverage + 0.4*under.exam.one + 0.3*under.exam.two)#
+#hist(tempGradeUnder)#
+#summary(tempGradeUnder)#
+#
+head(underGrade <- data.frame(underName, tempGradeUnder, under.exam.one, under.exam.one.no.laplace, under.exam.two, h1under, h2under, h3under, h4under))#
+#
+(rank <- underGrade[order(-tempGradeUnder),])#
+#
+rownames(rank) <- 1:nrow(rank)#
+#
+rank
+4300*6
+10+10+25+15+10
+15+10+25+15+20
+diag(1,2)
+2000-600
+1400+106
+2000-638.14
+422.83-100
+322.83/2
+2000 - 111.79 - 683.14 + 161.42
+55.58*3
+125*10
+149*5
+745+719
+149+3
+149*5
+125*5
+719+625
+599/12
+312.85+1159
+25,934.79 - 15000
+25934.79 - 15000
+setwd("~/work_on/packages/partitions")
+install_github("bbetanc1/partitions")
+library("devtools")
+library(roxygen2)
+install_github("bbetanc1/partitions")
+install_github("bbetanc1/partitions")
+install("partitions")
+install("partitions")
+getwd()
+library(RecordLinkage)#
+data(RLdata500)#
+head(RLdata500)
+choose(500,2)#
+#
+# Blocking by last name initial  #
+last_init <- substr(RLdata500[,"lname_c1"], 1, 1)#
+head(last_init)#
+# Number of blocks#
+length(unique(last_init))
+# Number of records per block#
+tbl <- table(last_init)#
+head(tbl)#
+#
+# Block sizes can vary a lot#
+summary(as.numeric(tbl))#
+# Number of records pairs per block#
+sapply(tbl, choose, k=2)
+# Code to extract subset of duplicate records#
+RLdata500c <- RLdata500[,-c(2,4)]#
+cln <- table(identity.RLdata500)#
+iddup <- which(cln>1)-1#
+dup <- which(identity.RLdata500%in%iddup)#
+sub_dup <- RLdata500c[dup,]#
+oid <- order(identity.RLdata500[dup])#
+dup_set <- sub_dup[oid,]#
+tail(dup_set)#
+#
+# Levenshtein similarity #
+levenshteinSim("SCHUTE", "SCHULTE")#
+levenshteinSim("CHRISTA", "CHRISTAH")#
+# Jaro-Winkler similarity#
+jarowinkler(c("SCHUTE","CHRISTA"),#
+            c("SCHULTE","CHRISTAH"))#
+#
+tail(dup_set)
+tail(soundex(dup_set$fname_c1))#
+tail(soundex(dup_set$lname_c1))
+head(dup_set)
+head(soundex(dup_set$lname_c1))
+rpairs <- compare.dedup(RLdata500c, #
+blockfld = list(1, 3), #list with blocking fields#
+identity = identity.RLdata500)#
+#
+tail(rpairs$pairs)#
+#
+rpairsfuzzy <- compare.dedup(RLdata500c, #
+               phonetic = FALSE, blockfld = 3, #
+               strcmp = TRUE, strcmpfun = jarowinkler)
