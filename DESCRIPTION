@@ -3,12 +3,13 @@ Type: Package
 Title: Entity resolution with random partition priors for microclustering
 Version: 0.1.0
 Date: 2019-07-07
-Author: Brenda Betancourt <bbetancourt@ufl.edu>
-Maintainer: Brenda Betancourt <bbetancourt@ufl.edu>
-Description: One paragraph description of what the package does as
-       one or more full sentences.
-Suggests: knitr, rmarkdown
+Authors@R: person("Brenda", "Betancourt", email = "bbetancourt@ufl.edu",
+  role = c("aut", "cre"))
+Suggests: 
+      knitr, 
+      rmarkdown
 VignetteBuilder: knitr
+Description: An implementation of the model in Betancourt, Zanella, Steorts (2020), which performs microclustering for categorical data. 
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.1)
 LinkingTo: Rcpp
