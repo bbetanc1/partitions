@@ -1,7 +1,7 @@
 Package: partitions
 Type: Package
 Title: Entity resolution with random partition priors for microclustering
-Version: 1.0
+Version: 0.1.0
 Date: 2019-07-07
 Author: Brenda Betancourt <bbetancourt@ufl.edu>
 Maintainer: Brenda Betancourt <bbetancourt@ufl.edu>
