@@ -4,10 +4,10 @@
 \alias{SimData}
 \title{Generates a simulated dataset based on a true partition}
 \usage{
-SimData(trueL, nfields, ncat, true_beta)
+SimData(true_L, nfields, ncat, true_beta)
 }
 \arguments{
-\item{trueL}{Vector of size max cluster size with number of clusters of each size}
+\item{true_L}{Vector of size max cluster size with number of clusters of each size}
 
 \item{nfields}{Number of fields}
 

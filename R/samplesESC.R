@@ -1,5 +1,7 @@
 #' @useDynLib partitions
 #' @importFrom Rcpp sourceCpp
+#' @importFrom stats rbinom rgamma runif
+
 NULL
 
 ## Wrapper function ##
@@ -236,8 +238,6 @@ select_block<-function(x, size_block){
 #' @param data Data frame containing only categorical variables 
 #' @return Data frame of remapped values to consecutive 
 #'         list of integers
-#' @examples 
-#' DataRemap(Italy)
 #' @export
 DataRemap <- function(data) {
 	nfields <- ncol(data)
@@ -285,7 +285,7 @@ SampleCluster <- function(data, Prior, burn, nsamples, spacing=1000, block_flag=
     nfields <- ncol(x)
     proportions <- lapply(1:nfields,calcProp,data=x)
     # Initial clustering
-    z0 <- sample(1:(N), N, rep=TRUE)
+    z0 <- sample(1:(N), N, replace=TRUE)
     # No gaps
     z <- as.numeric(factor(z0 , labels = seq(1,length(unique(z0)))))
     # Initial Prior parameter values

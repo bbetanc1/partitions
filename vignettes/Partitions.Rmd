@@ -27,7 +27,7 @@ To obtain posterior samples of the cluster assignments and the model parameters 
 ```{r, eval=TRUE}
 # true partition to generate simulated data
 # 50 clusters of each size, max cluster size is 4
-true_L<-c(50,50,50,50)
+true_L <- c(50,50,50,50)
 # number of fields
 nfields <- 5
 # number of cartegories per field
@@ -36,7 +36,7 @@ ncat <- rep(10,5)
 true_beta <- 0.01
 library('partitions')
 # generate simulated data
-x <- SimData(trueL, nfields, ncat, true_beta)
+x <- SimData(true_L, nfields, ncat, true_beta)
 PosESCD <- SampleCluster(data=x, Prior="ESCD", burn=5, nsamples=10)
 ```
 

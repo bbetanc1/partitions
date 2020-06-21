@@ -16,6 +16,3 @@ Data frame of remapped values to consecutive
 \description{
 Remap data to a list of consecutive integers per field
 }
-\examples{
-DataRemap(Italy)
-}
