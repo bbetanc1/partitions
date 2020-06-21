@@ -30,14 +30,6 @@ class Web {
             // Note this is vector/struct copy, which automatically allocates memory and copies entries into it.
             int n = data.size();
             if (n==0) stop("(Web error) Data vector must have at least one entry.");
-            //assignments.resize(n,UNASSIGNED); // adjust assignments vector to have correct size (ids are temporarily not assigned)
-            // put each element in a cluster by itself
-            /*
-            for (int i=0; i<n; i++) {
-                int id = create_cluster();
-                insert(i,id);
-            }
-             */
             
             // put each element in their respective cluster
             for (int i=0; i<n; i++) {

@@ -10,9 +10,6 @@ using namespace std;
 #include "web.h"
 #include "gibbs_webSP.h"
 #include "logsumexp.h"
-#include "gibbs_webSP_Prior.h"
-#include "gibbs_webSPscale.h"
-
 
 // Multiple independent Dirichlet-Multinomials
 class Web_Params {
@@ -153,175 +150,30 @@ IntegerMatrix Web_SamplerSP(IntegerMatrix data_, IntegerVector assignments, Nume
 }
 
 // [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_Par(IntegerMatrix data_, IntegerVector assignments, int tclus, NumericVector A,
-                            NumericVector B, NumericVector distortions, List params, int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_Par(W, tclus,logA,logB,n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
+IntegerMatrix Web_SamplerSP_fbl(IntegerMatrix data_, IntegerVector assignments, IntegerVector bl, NumericVector A,
+                                   NumericVector B, NumericVector distortions, List params, int n_samples, int spacing) {
+  // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
+  vector< vector<int> > data;
+  data.resize(data_.nrow());
+  for (int i=0; i<data_.nrow(); i++) {
+    data[i].resize(data_.ncol());
+    for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
+  }
+  NumericVector logA = log(A); logA.push_front(0);
+  NumericVector logB = log(B); logB.push_front(0);
+  // convert parameter list to Web_Params
+  Web_Params p;
+  for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
+  for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
+  validate(data,p);
+  // create Web object
+  int nclus = max(assignments);
+  vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
+  Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
+  // run sampler and return the results
+  IntegerMatrix z = gibbs_web_fbl(W,bl,logA,logB,n_samples,spacing);
+  return increment(z,1); // switch back to 1-based values
 }
-
-
-// [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_Prior(IntegerMatrix data_, IntegerVector assignments, NumericVector A,
-                            NumericVector B, NumericVector distortions, List params,int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_prior(W,logA,logB,n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
-}
-
-
-// [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_Scale(IntegerMatrix data_, IntegerVector assignments, IntegerMatrix Index, NumericVector A, NumericVector B, NumericVector distortions, List params, int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_scale(W,Index,logA,logB,n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
-}
-
-
-// [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_BL(IntegerMatrix data_, IntegerVector assignments, List zblock, IntegerVector Idblock,NumericVector A, NumericVector B, NumericVector distortions, List params, int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_scaleBL(W,zblock,Idblock,logA,logB,n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
-}
-
-// [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_ScaleMix(IntegerMatrix data_, IntegerVector assignments, IntegerMatrix index, NumericVector A, NumericVector B, NumericVector distortions, List params, int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_scaleMix(W,index,logA,logB,n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
-}
-
-
-// [[Rcpp::export]]
-IntegerMatrix Web_SamplerSP_ScaleBlock(IntegerMatrix data_, IntegerVector assignments, IntegerMatrix index, NumericVector A, NumericVector B, NumericVector distortions, List params, IntegerVector block, bool mix,
-                                       int n_samples, int spacing) {
-    // convert data from matrix (with 1-based values) to vector of vectors (with 0-based values)
-    vector< vector<int> > data;
-    data.resize(data_.nrow());
-    for (int i=0; i<data_.nrow(); i++) {
-        data[i].resize(data_.ncol());
-        for (int j=0; j<data_.ncol(); j++) data[i][j] = data_(i,j)-1;
-    }
-    NumericVector logA = log(A); logA.push_front(0);
-    NumericVector logB = log(B); logB.push_front(0);
-    // convert parameter list to Web_Params
-    Web_Params p;
-    for (int i=0; i<int(params.size()); i++) p.a.push_back(as< vector<double> >(params[i]));
-    for (int i=0; i<int(distortions.size()); i++) p.betas.push_back(distortions[i]);
-    validate(data,p);
-    // create Web object
-    int nclus = max(assignments);
-    vector<int> assignments_ = as< vector<int> >(increment(assignments,-1));
-    Web< Web_Cluster,Web_Params,vector<int> > W(data,assignments_,p,nclus);
-    // run sampler and return the results
-    IntegerMatrix z = gibbs_web_scaleBlock(W,index,logA,logB,block, mix, n_samples,spacing);
-    return increment(z,1); // switch back to 1-based values
-}
-
-
-/*** R
-n <- 10  # number of data points
-gamma <- 1  # PPP parameter
-a <- list(rep(1,3),rep(.5,5),rep(2,2))  # Dirichlet parameters
-rcat <- function(n,p) sample.int(length(p),n,TRUE,p)  # sample from categorical distn
-data <- cbind(rcat(n,a[[1]]), rcat(n,a[[2]]), rcat(n,a[[3]]))  # sample some test data
-Web_Sampler(data,rep(1,n),rep(gamma,n),a,20,4)  # run Gibbs sampler for PPP model
-*/
-// For a DPM, the last line would instead be:
-// Web_Sampler(data,seq(1,n),rep(alpha,n),a,20,4)
-
-
 
 #endif
 

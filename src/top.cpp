@@ -12,15 +12,8 @@ IntegerVector increment(IntegerVector x, int a) {
 }
 
 #include "web_samplerSP.h"
-#include "link_sampler.h"
-#include "mdm_sampler.h"
-#include "exp_sampler.h"
-#include "mfm.h"
-//#include "logprior.h"
-#include "unislice.h"
 #include "loglikx.h"
 #include "unislicem.h"
 #include "loglikf.h"
 #include "unislicef.h"
-#include "unislicemGP.h"
 

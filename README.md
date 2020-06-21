@@ -1,5 +1,5 @@
 # partitions
-Performs entity resolution for data bases with categorical fields using partition-based Bayesian clustering models. Includes two new microclustering prior models for random partitions, and the traditional Dirichlet and Pitman-Yor process priors.
+Performs entity resolution for data bases with categorical fields using partition-based Bayesian clustering models. Includes two new microclustering prior models for random partitions -- ESC models, and the traditional Dirichlet and Pitman-Yor process priors.
 
 ## Installation
 
@@ -16,8 +16,7 @@ This package implements the methods introduced in the following paper:
 
 ## Background
 
-Entity resolution (record linkage or de-duplication) is used to join multiple databases to remove duplicate entities. Recent methods tackle the entity resolution problem as a clustering task. While traditional Bayesian random partition models assume that the size of each cluster grows linearly with the number of data points, this assumption is not appropriate for applications such as entity resolution. This problem requires
-models that yield clusters whose sizes grow sublinearly with the total number of data
+Entity resolution (record linkage or de-duplication) is used to join multiple databases to remove duplicate entities. Recent methods tackle the entity resolution problem as a clustering task. While traditional Bayesian random partition models assume that the size of each cluster grows linearly with the number of data points, this assumption is not appropriate for applications such as entity resolution. This problem requires models that yield clusters whose sizes grow sublinearly with the total number of data
 points -- `the microclustering property`. The `partitions` package includes two random partition models that satisfy the microclustering property and implements entity resolution with categorical data.
 
 ## Main functions

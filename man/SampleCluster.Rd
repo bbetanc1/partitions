@@ -4,8 +4,7 @@
 \alias{SampleCluster}
 \title{Posterior samples of cluster assignments and Prior parameters}
 \usage{
-SampleCluster(data, Prior, burn, nsamples, truncds, samds = TRUE,
-  spacing = 1000, w = 3, m = 10, hpriorpar = NULL, bl = NULL)
+SampleCluster(data, Prior, burn, nsamples, spacing = 1000, block_flag = TRUE)
 }
 \arguments{
 \item{data}{Data frame containing only categorical variables}
@@ -16,19 +15,9 @@ SampleCluster(data, Prior, burn, nsamples, truncds, samds = TRUE,
 
 \item{nsamples}{MCMC iterations after burn-in}
 
-\item{truncds}{Truncation value for distortion probabilities (betas)}
-
-\item{samds}{Indicator to sample the fields' distortion probabilities (betas)}
-
 \item{spacing}{Thinning for chaperones algorithm (default 1000)}
 
-\item{w}{Step size for slice sampler (default 3)}
-
-\item{m}{Limit on steps for slice sampler (default 10)}
-
-\item{hpriorpar}{hyperpameter values for priors on Prior parameters}
-
-\item{bl}{vector with block assignments for blocking method}
+\item{block_flag}{TRUE for non-uniform chaperones (default)}
 }
 \value{
 List with posterior samples for cluster assignments (Z),

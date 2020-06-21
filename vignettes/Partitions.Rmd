@@ -13,26 +13,6 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 This vignette shows how to use the partitions package to perform entity resolution with categorical variables using partition-based Bayesian clustering models.
 
-## Datasets
-
-The data set *Italy* is available to the user after the packaged is installed. 
-
-* This data set is constructed from the Survey on Household Income and Wealth (SHIW), conducted by the Bank of Italy every two years. We use the 2008 and 2010 databases
-from the Fruili region, which consists of 789 records combined. Ground truth is available via unique
-identifiers based upon social security numbers; roughly 74% of the clusters are singletons. The true number of unique records is 587.
-
-The datasets can be loaded as follows:
-```{r, eval=TRUE}
-library(partitions)
-data(Italy)
-```
-The object `Italy` contains the records and `Id_Italy` the ground truth for the partition of the data. The values of the fields of this dataset are already remapped to consecutive integers but this is not required in advance.
-
-```{r, eval=TRUE}
-tail(Italy, rownames=TRUE)
-tail(Id_Italy)
-```
-
 ## Partition Priors
 
 The package contains the implemetation of four random partition models that are used to perform entitiy resolution as a clustering task: 
@@ -42,10 +22,22 @@ The package contains the implemetation of four random partition models that are 
 
 ## Posterior Samples
 
-To obtain posterior samples of the cluster assignments and the model parameters the user needs to specify the data, the random partition Prior ("DP", "PY" or "ESCNB"), the burn-in period, the number of iterations and the truncation value for the prior of the distortion probabilities of the fields (usually a small positive value $< 0.1$): 
+To obtain posterior samples of the cluster assignments and the model parameters the user needs to specify the data, the random partition Prior ("DP", "PY", "ESCNB" or "ESCD"), the burn-in period, and the number of iterations: 
 
 ```{r, eval=TRUE}
-PosNB <- SampleCluster(data=Italy, Prior="ESCNB", burn=5, nsamples=10, truncds=0.01)
+# true partition to generate simulated data
+# 50 clusters of each size, max cluster size is 4
+true_L<-c(50,50,50,50)
+# number of fields
+nfields <- 5
+# number of cartegories per field
+ncat <- rep(10,5)
+# distortion probability for the fields
+true_beta <- 0.01
+library('partitions')
+# generate simulated data
+x <- SimData(trueL, nfields, ncat, true_beta)
+PosESCD <- SampleCluster(data=x, Prior="ESCD", burn=5, nsamples=10)
 ```
 
 The output is a list with two elements: 
@@ -54,34 +46,29 @@ The output is a list with two elements:
 * `Params`: A matrix of size nsamples x # of model parameters containing the samples of the model parameters. The columns named beta_1 to beta_L  correspond to the distortion probabilities of the fields in the data.
 
 ```{r, eval=TRUE}
-PosNB$Z[1:5,1:10]
-head(PosNB$Params)
+PosESCD$Z[1:5,1:10]
+head(PosESCD$Params)
 ```
 
-The distortion probabilities can also be fixed at the `truncds` value by specifying `samds=FALSE`:
+Samples for the DP,PY, and ESCNB models can be similarly obtained as:
 
 ```{r, eval=FALSE}
-PosNB <- SampleCluster(data=Italy, Prior="ESCNB", burn=5, nsamples=10, truncds=0.01, samds = FALSE)
-```
-
-Samples for the "DP" and "PY" models can be similarly obtained as:
-
-```{r, eval=FALSE}
-PosDP <- SampleCluster(Italy, "DP", 5, 10, 0.01)
-PosPY <- SampleCluster(Italy, "PY", 5, 10, 0.01)
-```
-
-To obtain samples from the ESCD model, the `SampleClusterESCD` function should be used instead.
-```{r, eval=TRUE}
-PosD <- SampleClusterESCD(Italy, burn=5, nsamples=10, truncds=0.01)
-PosD$Z[1:5,1:10]
-head(PosD$Params)
+PosDP <- SampleCluster(x, "DP", 5, 10)
+PosPY <- SampleCluster(x, "PY", 5, 10)
+PosESCNB <- SampleCluster(x, "ESCNB", 5, 10)
 ```
 
 ## Error rates 
 
-If the ground truth for the partition of the data is available, the False Negative Rate (FNR) and False Discovery Rate (FDR) can be computed (for any model) using the `calcError` function:
+If the ground truth for the partition of the data is available, the average False Negative Rate (FNR) and False Discovery Rate (FDR) over the posterior samples can be computed (for any model) using the `mean_fnr` and `mean_fdr` functions:
 ```{r, eval=TRUE}
-calcError(PosD$Z, Id_Italy$id)
+true_M <- length(true_L)
+true_K <- sum(true_L)
+# true cluster assignments
+id <- rep(1:true_K, times=rep(1:true_M, times=true_L))
+# average fnr
+mean_fnr(PosESCD$Z,id)
+# average fdr
+mean_fdr(PosESCD$Z,id)
 ```
 
