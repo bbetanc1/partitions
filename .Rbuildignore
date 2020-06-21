@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^vignettes/i_get_built\.Rmd$
+^\.travis\.yml$
+^cran-comments\.md$
