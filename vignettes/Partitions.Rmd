@@ -84,9 +84,7 @@ PosESCD <- SampleCluster(data=x, Prior="ESCD", burn=5, nsamples=10)
 The output is a **list** with two elements: 
 
 - `Z`: A matrix of size nsamples x N containing the samples of the cluster assignments.
-- `Params`: A matrix of size nsamples x # of model parameters containing the samples of the model parameters. The columns named beta_1 to beta_L  correspond to the distortion probabilities of the fields in the data.
-
-# ATTN: alpha, r, and p have not been defined for the user. 
+- `Params`: A matrix of size nsamples x # of model hyperparameters containing the samples of the model hyperparameters. The columns named beta_1 to beta_L correspond to the distortion probabilities of the fields in the data.
 
 Observe that each row corresponds to an iteration of the Gibbs sampler. Observe that each column corresponds to a record. Observe that we have 500 records and 10 Gibbs iterations, as expected. We can inspect the first five row and first 10 columns of the posterior output. 
 
@@ -95,7 +93,7 @@ dim(PosESCD$Z)
 PosESCD$Z[1:5,1:10]
 ```
 
-In addition, we can inspect the samples of the model parameters. 
+In addition, we can inspect the samples of the model hyperparameters. In the case of the ESCD model, there are three hyperparamters $\alpha$, $r$, and $p$.
 
 ```{r}
 head(PosESCD$Params)
