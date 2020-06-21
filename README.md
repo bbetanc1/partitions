@@ -11,7 +11,7 @@ devtools::install_github("bbetanc1/partitions", build_vignettes = TRUE)
 
 This package implements the methods introduced in the following paper:
 
-> Betancourt, Brenda, Giacomo Zanella and Rebecca C. Steorts (2020). "Random Partitions Models for Microclustering tasks".
+> Betancourt, Brenda, Giacomo Zanella and Rebecca C. Steorts (2020). "Random Partitions Models for Microclustering Tasks".
 
 ## Background
 
