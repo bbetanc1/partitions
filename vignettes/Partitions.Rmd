@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-We present a small example from Betancourt, Zanella, and Steorts (2020), "Random Partitions Models for Microclustering Tasks" \emph{Journal of the American Statistical Association, Theory and Methods}, Minor Revision. The partitions package performs entity resolution with categorical variables using partition-based Bayesian clustering models.
+We present a simulated data set from Betancourt, Zanella, and Steorts (2020), "Random Partitions Models for Microclustering Tasks" \emph{Journal of the American Statistical Association, Theory and Methods}, Minor Revision. The partitions package performs entity resolution with categorical variables using partition-based Bayesian clustering models.
 
 Our goals include:
 
@@ -32,7 +32,7 @@ library('partitions')
 set.seed(123)
 ```
 
-## Creating a Toy Data Set
+## Creating a Synthetic Data Set
 
 We first create a synthetic data set by assuming a fixed partition. We assume that there are a maximum of four clusters. We assume that there are 50 records within each cluster. We assume that each record has 5 fields of categorical varaibles. We assume that the there are 10 possible categories per field. We assume that the distortion probability for each field is 0.01. The synthetic data set produces duplicate records using the `SimData()` function. Our syntehtic data set contains 500 records, with 200 unique records. 
 
