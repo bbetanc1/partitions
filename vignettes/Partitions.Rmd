@@ -40,17 +40,18 @@ We first create a synthetic data set by assuming a fixed partition. We assume th
 ```{r}
 # true partition to generate simulated data
 # 50 clusters of each size, max cluster size is 4
-true_L <- c(50,50,50,50)
+truePartition <- c(50,50,50,50)
 # number of fields
-nfields <- 5
+numberFields <- 5
 # number of cartegories per field
-ncat <- rep(10,5)
+numberCategories <- rep(10,5)
 # distortion probability for the fields
-true_beta <- 0.01
+trueBeta <- 0.01
 # generate simulated data
-x <- SimData(true_L, nfields, ncat, true_beta)
+simulatedData <- SimData(true_L = truePartition, nfields = numberFields, 
+                         ncat = numberCategories, true_beta = trueBeta)
 # dimension of data set
-dim(x)
+dim(simulatedData)
 ```
 
 ## Partition Priors
@@ -78,7 +79,7 @@ Let's investigate this for the synthetic data set!
 
 ```{r, eval=TRUE}
 # example of drawing from the posterior with the ESCD prior 
-PosESCD <- SampleCluster(data=x, Prior="ESCD", burn=5, nsamples=10)
+posteriorESCD <- SampleCluster(data=simulatedData, Prior="ESCD", burn=5, nsamples=10)
 ```
 
 The output is a **list** with two elements: 
@@ -89,22 +90,22 @@ The output is a **list** with two elements:
 Observe that each row corresponds to an iteration of the Gibbs sampler. Observe that each column corresponds to a record. Observe that we have 500 records and 10 Gibbs iterations, as expected. We can inspect the first five row and first 10 columns of the posterior output. 
 
 ```{r, eval=TRUE}
-dim(PosESCD$Z)
-PosESCD$Z[1:5,1:10]
+dim(posteriorESCD$Z)
+posteriorESCD$Z[1:5,1:10]
 ```
 
 In addition, we can inspect the samples of the model hyperparameters. In the case of the ESCD model, there are three hyperparamters $\alpha$, $r$, and $p$.
 
 ```{r}
-head(PosESCD$Params)
+head(posteriorESCD$Params)
 ```
 
 Samples for the DP, PY, and ESCNB models can be similarly obtained as:
 
 ```{r, eval=FALSE}
-PosDP <- SampleCluster(x, "DP", 5, 10)
-PosPY <- SampleCluster(x, "PY", 5, 10)
-PosESCNB <- SampleCluster(x, "ESCNB", 5, 10)
+posteriorDP <- SampleCluster(simulatedData, "DP", 5, 10)
+posteriorPY <- SampleCluster(simulatedData, "PY", 5, 10)
+posteriorESCNB <- SampleCluster(simulatedData, "ESCNB", 5, 10)
 ```
 
 ## Evaluation Metrics
@@ -113,14 +114,18 @@ If the ground truth for the partition of the data is available, the average Fals
 
 
 ```{r, eval=TRUE}
-true_M <- length(true_L)
-true_K <- sum(true_L)
+maxPartitionSize<- length(truePartition)
+uniqueNumberRecords <- sum(truePartition)
+
+#true_M <- length(truePartition)
+#true_K <- sum(truePartition)
 # true cluster assignments
-id <- rep(1:true_K, times=rep(1:true_M, times=true_L))
+
+id <- rep(1:uniqueNumberRecords, times=rep(1:maxPartitionSize, times=truePartition))
 # average fnr
-mean_fnr(PosESCD$Z,id)
+mean_fnr(posteriorESCD$Z,id)
 # average fdr
-mean_fdr(PosESCD$Z,id)
+mean_fdr(posteriorESCD$Z,id)
 ```
 
 Of course, in practice, one would want to run the sampler much longer in practice to calculate the error rates above. 
