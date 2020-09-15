@@ -4,9 +4,9 @@ Title: Entity Resolution with Random Partition Priors for Microclustering
 Version: 0.1.0
 Date: 2020-06-20
 Authors@R: as.person(c(
-    "Brenda Betancourt <bbetancourt@ufl.edu> [aut, cre]", 
+    "Brenda Betancourt <bbetancourt@ufl.edu> [aut]", 
     "Giacomo Zanella <giacomo.zanella@unibocconi.it> [aut]",
-    "Rebecca Steorts <beka@stat.duke.edu> [aut]"
+    "Rebecca Steorts <beka@stat.duke.edu> [aut, cre]"
   ))
 Description: An implementation of the model in Betancourt, Zanella, Steorts (2020), 
     which performs entity resolution for categorical data using microclustering.
