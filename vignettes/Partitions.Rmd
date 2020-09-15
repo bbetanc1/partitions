@@ -17,9 +17,9 @@ We present a simulated data set from Betancourt, Zanella, and Steorts (2020), "R
 
 Our goals include:
 
-- Creating a synthetic data set
+- Creating a synthetic data set (with a fixed partition)
 - Illustrating how the user can perform entity resolution using the partitions package
-- Illustrating how the user can calculate standard evaluation metrics when a unique identifer is known. 
+- Illustrating how the user can calculate standard evaluation metrics when a unique identifier is known. 
 
 ## Loading all Packages Needed
 
@@ -32,9 +32,13 @@ library('partitions')
 set.seed(123)
 ```
 
-## Creating a Synthetic Data Set
+## Creating a Synthetic Data Set with a Fixed Partition
 
-We first create a synthetic data set by assuming a fixed partition. We assume that there are a maximum of four clusters. We assume that there are 50 records within each cluster. We assume that each record has 5 fields of categorical varaibles. We assume that the there are 10 possible categories per field. We assume that the distortion probability for each field is 0.01. The synthetic data set produces duplicate records using the `SimData()` function. Our syntehtic data set contains 500 records, with 200 unique records. 
+Now we create a synthetic data set, where we assume a fixed partition. 
+
+Assume there are a maximum of four clusters. Assume that there are 50 records within each cluster. Assume that each record has 5 fields of categorical variable. Assume that there are 10 potential categories per field. Assume the distortion probability for each field is 0.01. 
+
+Our synthetic data set produces duplicate records using the `SimData()` function, where there are 500 records in all with 200 unique records. 
 
 
 ```{r}
@@ -43,39 +47,44 @@ We first create a synthetic data set by assuming a fixed partition. We assume th
 truePartition <- c(50,50,50,50)
 # number of fields
 numberFields <- 5
-# number of cartegories per field
+# number of categories per field
 numberCategories <- rep(10,5)
 # distortion probability for the fields
 trueBeta <- 0.01
 # generate simulated data
-simulatedData <- SimData(true_L = truePartition, nfields = numberFields, 
-                         ncat = numberCategories, true_beta = trueBeta)
+simulatedData <- SimData(true_L = truePartition, nfields = numberFields, ncat = numberCategories, true_beta = trueBeta)
 # dimension of data set
 dim(simulatedData)
 ```
 
-## Partition Priors
+## Partition Priors for Entity Resolution
 
-The package contains the implemetation of four random partition models that are used to perform entity resolution as a clustering task: 
+This package contains the implementation of four random partition models used for entity resolution tasks:
 
 - Two traditional random partition models: 
+
 1.  Dirichlet process (DP) mixtures 
 2.  Pitman–Yor process (PY) mixtures. 
+
 -  Two random partition models that exhibit the microclustering property, which are 
-Exchangeable Sequences of Clusters (ESC) models, which are referred to as (and are defined in our paper): 
+
+Exchangeable Sequences of Clusters (ESC) models, which are referred to as (and are further defined in our paper): 
+
 3.  The ESCNB model 
 4.  The ESCD model
 
 ## Posterior Samples
 
-In order to obtain posterior samples of the cluster assignments and the model parameters the user needs to specificy the following
+In order to obtain posterior samples of the cluster assignments and the model parameters the user needs to specify the following:
 
 - the data,
 - the random partition Prior ("DP", "PY", "ESCNB" or "ESCD"),
 - the burn-in period, 
 - and the number of iterations for the Gibbs sampler to run. 
 
-Let's investigate this for the synthetic data set! 
+## Investigation for Synthetic Data Set 
+
+Let's investigate this for the synthetic data set where we draw a posterior sample from the ESCD model using our simulated data with a burn-in period of 5 points and 10 Gibbs sampler values.  
 
 ```{r, eval=TRUE}
 # example of drawing from the posterior with the ESCD prior 
@@ -85,7 +94,7 @@ posteriorESCD <- SampleCluster(data=simulatedData, Prior="ESCD", burn=5, nsample
 The output is a **list** with two elements: 
 
 - `Z`: A matrix of size nsamples x N containing the samples of the cluster assignments.
-- `Params`: A matrix of size nsamples x # of model hyperparameters containing the samples of the model hyperparameters. The columns named beta_1 to beta_L correspond to the distortion probabilities of the fields in the data.
+- `Params`: A matrix of size nsamples x # of model hyper-parameters containing the samples of the model hyper-parameters. The columns named beta_1 to beta_L correspond to the distortion probabilities of the fields in the data.
 
 Observe that each row corresponds to an iteration of the Gibbs sampler. Observe that each column corresponds to a record. Observe that we have 500 records and 10 Gibbs iterations, as expected. We can inspect the first five row and first 10 columns of the posterior output. 
 
@@ -100,7 +109,7 @@ In addition, we can inspect the samples of the model hyperparameters. In the cas
 head(posteriorESCD$Params)
 ```
 
-Samples for the DP, PY, and ESCNB models can be similarly obtained as:
+Samples for the DP, PY, and ESCNB models can be similarly obtained as follows:
 
 ```{r, eval=FALSE}
 posteriorDP <- SampleCluster(simulatedData, "DP", 5, 10)
