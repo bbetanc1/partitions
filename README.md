@@ -36,4 +36,4 @@ browseVignettes("partitions")
 
 ## Acknowledgements
 
-This work was supported through the National Science Foundation through NSF CAREER Award 1652431.
+This work was supported through the National Science Foundation through NSF CAREER Award 1652431 (PI: Steorts).
